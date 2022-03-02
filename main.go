@@ -43,10 +43,7 @@ func main() {
 
 			timer := time.NewTimer(time.Duration(*timeLimit) * time.Second)
 
-			go func() {
-				PromptQuestion(question)
-				answerChn <- GetUserAns(reader)
-			}()
+			go AskQuestion(question, answerChn, reader)
 
 			select {
 			case <-timer.C:
@@ -66,6 +63,11 @@ func main() {
 			return
 		}
 	}
+}
+
+func AskQuestion(question string, answerChn chan string, reader *bufio.Reader) {
+	PromptQuestion(question)
+	answerChn <- GetUserAns(reader)
 }
 
 func PromptQuestion(question string) {
