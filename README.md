@@ -5,3 +5,4 @@ If the user doesn't answer correctly, the game is stopped and the number of corr
 TODO: 
     * Add time limit for answer
     * Make a better visual experience
+    * Check requirements from here: https://github.com/gophercises/quiz
