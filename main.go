@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -19,9 +20,13 @@ func check(err error) {
 }
 
 func main() {
-	fmt.Println("Hello Quiz Game")
+	fmt.Println("Quiz Game")
 
-	file, err := os.Open("questions.csv")
+	filename := flag.String("file", "questions.csv", "A csv file in the format of 'question,answer'")
+	timeLimit := flag.Int("time", 2, "The time limit for the quiz in seconds")
+	flag.Parse()
+
+	file, err := os.Open(*filename)
 	check(err)
 	defer file.Close()
 
@@ -36,7 +41,7 @@ func main() {
 			question := record[0]
 			correctAnswer := record[1]
 
-			timer := time.NewTimer(2 * time.Second)
+			timer := time.NewTimer(time.Duration(*timeLimit) * time.Second)
 
 			go func() {
 				PromptQuestion(question)
